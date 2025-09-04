@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -28,6 +30,10 @@ public class AddTodoActivity extends AppCompatActivity {
         etEndTime = findViewById(R.id.et_end_time);
         etRemindTime = findViewById(R.id.et_remind_time);
         Button btnSave = findViewById(R.id.btn_save);
+
+        // 初始化返回按钮并设置点击事件
+        ImageView ivBack = findViewById(R.id.iv_back);
+        ivBack.setOnClickListener(v -> finish()); // 关闭当前页面返回主页
 
         // 初始化日期时间格式
         calendar = Calendar.getInstance();
