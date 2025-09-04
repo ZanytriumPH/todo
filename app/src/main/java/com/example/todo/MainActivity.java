@@ -1,6 +1,11 @@
 package com.example.todo;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,6 +16,21 @@ public class MainActivity extends AppCompatActivity implements TodoAdapter.OnTod
 
     private TodoAdapter mAdapter;
     private List<Todo> mTodoList;
+    private static final int ADD_TODO_REQUEST = 1;
+
+    // 注册Activity结果监听器
+    private final ActivityResultLauncher<Intent> addTodoLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    Todo newTodo = (Todo) result.getData().getSerializableExtra("new_todo");
+                    if (newTodo != null) {
+                        mTodoList.add(newTodo);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,22 +45,26 @@ public class MainActivity extends AppCompatActivity implements TodoAdapter.OnTod
 
         // 初始化RecyclerView
         RecyclerView rvTodo = findViewById(R.id.rv_todo);
-        rvTodo.setLayoutManager(new LinearLayoutManager(this)); // 线性布局
-        mAdapter = new TodoAdapter(mTodoList, this); // 绑定适配器
+        rvTodo.setLayoutManager(new LinearLayoutManager(this));
+        mAdapter = new TodoAdapter(mTodoList, this);
         rvTodo.setAdapter(mAdapter);
+
+        // 绑定加号按钮点击事件
+        Button btnAdd = findViewById(R.id.btn_add);
+        btnAdd.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, AddTodoActivity.class);
+            addTodoLauncher.launch(intent);
+        });
     }
 
-    // 处理复选框状态变化
     @Override
     public void onCheckChanged(Todo todo) {
-        // 这里可以更新数据到数据库或SharedPreferences
-        mAdapter.notifyDataSetChanged(); // 刷新列表
+        mAdapter.notifyDataSetChanged();
     }
 
-    // 处理删除事件
     @Override
     public void onDelete(Todo todo) {
-        mTodoList.remove(todo); // 从列表中移除
-        mAdapter.notifyDataSetChanged(); // 刷新列表
+        mTodoList.remove(todo);
+        mAdapter.notifyDataSetChanged();
     }
 }
