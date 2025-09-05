@@ -150,7 +150,7 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_margin="16dp"
-        android:background="#5E2DFD"
+        app:backgroundTint="@color/custom_btn_color"
         android:text="保存"
         android:textColor="@color/white"
         android:textSize="16sp"
