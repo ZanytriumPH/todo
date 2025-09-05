@@ -45,6 +45,7 @@ dependencies {
 
     // Room 依赖（使用version catalog中的别名）
     implementation(libs.room.runtime)
+    implementation(libs.room.common.jvm)
     annotationProcessor(libs.room.compiler)  // Java项目用这个
 
     // 测试支持

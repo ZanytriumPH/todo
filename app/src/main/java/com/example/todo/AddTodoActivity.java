@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -13,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+
+import com.example.todo.entity.Todo;
 
 public class AddTodoActivity extends AppCompatActivity {
     private EditText etName, etEndTime, etRemindTime;  // 移除etStartTime
@@ -74,12 +75,11 @@ public class AddTodoActivity extends AppCompatActivity {
             return;
         }
 
-        // 创建Todo对象（使用createTime）
         Todo newTodo = new Todo(
-                System.currentTimeMillis(),
+                0, // 这里设为0，数据库会自动生成ID
                 name,
                 false,
-                createTime,  // 传入自动生成的创建时间
+                createTime,
                 endTime,
                 remindTime
         );
