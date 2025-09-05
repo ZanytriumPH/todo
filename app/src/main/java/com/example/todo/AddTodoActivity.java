@@ -15,7 +15,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class AddTodoActivity extends AppCompatActivity {
-    private EditText etName, etStartTime, etEndTime, etRemindTime;
+    private EditText etName, etEndTime, etRemindTime;  // 移除etStartTime
     private Calendar calendar;
     private SimpleDateFormat dateTimeFormat;
 
@@ -24,23 +24,21 @@ public class AddTodoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_todo);
 
-        // 初始化控件
+        // 初始化控件（移除etStartTime）
         etName = findViewById(R.id.et_name);
-        etStartTime = findViewById(R.id.et_start_time);
         etEndTime = findViewById(R.id.et_end_time);
         etRemindTime = findViewById(R.id.et_remind_time);
         Button btnSave = findViewById(R.id.btn_save);
 
-        // 初始化返回按钮并设置点击事件
+        // 初始化返回按钮
         ImageView ivBack = findViewById(R.id.iv_back);
-        ivBack.setOnClickListener(v -> finish()); // 关闭当前页面返回主页
+        ivBack.setOnClickListener(v -> finish());
 
         // 初始化日期时间格式
         calendar = Calendar.getInstance();
         dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
 
-        // 设置时间选择点击事件
-        etStartTime.setOnClickListener(v -> showDateTimePicker(etStartTime));
+        // 设置时间选择点击事件（移除startTime相关）
         etEndTime.setOnClickListener(v -> showDateTimePicker(etEndTime));
         etRemindTime.setOnClickListener(v -> showDateTimePicker(etRemindTime));
 
@@ -48,15 +46,13 @@ public class AddTodoActivity extends AppCompatActivity {
         btnSave.setOnClickListener(v -> saveTodo());
     }
 
-    // 显示日期时间选择器
+    // 显示日期时间选择器（保持不变）
     private void showDateTimePicker(EditText editText) {
-        // 日期选择
         new DatePickerDialog(this, (view, year, month, dayOfMonth) -> {
             calendar.set(Calendar.YEAR, year);
             calendar.set(Calendar.MONTH, month);
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-            // 时间选择
             new TimePickerDialog(this, (view1, hourOfDay, minute) -> {
                 calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                 calendar.set(Calendar.MINUTE, minute);
@@ -65,25 +61,25 @@ public class AddTodoActivity extends AppCompatActivity {
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
-    // 保存待办事项
+    // 保存待办事项（自动生成创建时间）
     private void saveTodo() {
         String name = etName.getText().toString().trim();
-        String startTime = etStartTime.getText().toString().trim();
         String endTime = etEndTime.getText().toString().trim();
         String remindTime = etRemindTime.getText().toString().trim();
+        // 自动生成当前时间作为创建时间
+        String createTime = dateTimeFormat.format(Calendar.getInstance().getTime());
 
-        // 简单验证
         if (name.isEmpty()) {
             etName.setError("请输入事项名称");
             return;
         }
 
-        // 创建Todo对象
+        // 创建Todo对象（使用createTime）
         Todo newTodo = new Todo(
-                System.currentTimeMillis(), // 使用时间戳作为ID
+                System.currentTimeMillis(),
                 name,
                 false,
-                startTime,
+                createTime,  // 传入自动生成的创建时间
                 endTime,
                 remindTime
         );

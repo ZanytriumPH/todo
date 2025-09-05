@@ -7,6 +7,7 @@
     android:background="#BBFFFBDD"
     tools:context=".AddTodoActivity">
 
+    <!-- 导航栏部分保持不变 -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/nav_bar"
         android:layout_width="match_parent"
@@ -20,15 +21,14 @@
             android:id="@+id/iv_back"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/ic_arrow_back"
             android:contentDescription="返回"
             android:clickable="true"
             android:focusable="true"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="@id/nav_title"
+            android:src="@drawable/ic_arrow_back"
+            android:layout_marginLeft="16dp"
             app:layout_constraintBottom_toBottomOf="@id/nav_title"
-            android:layout_marginLeft="16dp"/>
-
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="@id/nav_title" />
 
         <TextView
             android:id="@+id/nav_title"
@@ -79,26 +79,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_name" />
 
-            <TextView
-                android:id="@+id/tv_start_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="起始时间:"
-                android:textSize="16sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/et_name" />
-
-            <EditText
-                android:id="@+id/et_start_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:hint="请选择起始时间"
-                android:focusable="false"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_start_time" />
+            <!-- 移除开始时间相关控件 -->
 
             <TextView
                 android:id="@+id/tv_end_time"
@@ -108,15 +89,15 @@
                 android:text="终止时间:"
                 android:textSize="16sp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/et_start_time" />
+                app:layout_constraintTop_toBottomOf="@id/et_name" />  <!-- 改为接在事项名称下方 -->
 
             <EditText
                 android:id="@+id/et_end_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:hint="请选择终止时间"
                 android:focusable="false"
+                android:hint="请选择终止时间"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_end_time" />
@@ -136,8 +117,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:hint="请选择提醒时间"
                 android:focusable="false"
+                android:hint="请选择提醒时间"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_remind_time" />
@@ -150,10 +131,10 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_margin="16dp"
-        app:backgroundTint="@color/custom_btn_color"
         android:text="保存"
         android:textColor="@color/white"
         android:textSize="16sp"
+        app:backgroundTint="@color/custom_btn_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />

@@ -1,37 +1,45 @@
 package com.example.todo;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
-public class Todo implements Serializable { // 实现Serializable接口用于Intent传递
-    private long id; // 改为long类型，方便使用时间戳
+public class Todo implements Serializable {
+    private long id;
     private String content;
     private boolean isCompleted;
-    private String startTime; // 新增字段
-    private String endTime;   // 新增字段
-    private String remindTime; // 新增字段
+    private String createTime;  // 改为创建时间
+    private String endTime;
+    private String remindTime;
 
-    // 构造方法
+    // 新构造方法（包含创建时间）
     public Todo(long id, String content, boolean isCompleted,
-                String startTime, String endTime, String remindTime) {
+                String createTime, String endTime, String remindTime) {
         this.id = id;
         this.content = content;
         this.isCompleted = isCompleted;
-        this.startTime = startTime;
+        this.createTime = createTime;  // 改为创建时间
         this.endTime = endTime;
         this.remindTime = remindTime;
     }
 
-    // 原有构造方法保留，兼容旧数据
+    // 兼容旧数据的构造方法（自动生成创建时间）
     public Todo(int id, String content, boolean isCompleted) {
         this.id = id;
         this.content = content;
         this.isCompleted = isCompleted;
-        this.startTime = "";
+        // 自动生成创建时间
+        this.createTime = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(new Date());
         this.endTime = "";
         this.remindTime = "";
     }
 
-    // Getter和Setter方法
+    // Getter和Setter方法（更新为createTime）
+    public String getCreateTime() { return createTime; }
+    public void setCreateTime(String createTime) { this.createTime = createTime; }
+
+    // 其他原有方法保持不变...
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
 
@@ -40,9 +48,6 @@ public class Todo implements Serializable { // 实现Serializable接口用于Int
 
     public boolean isCompleted() { return isCompleted; }
     public void setCompleted(boolean completed) { isCompleted = completed; }
-
-    public String getStartTime() { return startTime; }
-    public void setStartTime(String startTime) { this.startTime = startTime; }
 
     public String getEndTime() { return endTime; }
     public void setEndTime(String endTime) { this.endTime = endTime; }
