@@ -42,7 +42,16 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
+
+    // Room 依赖（使用version catalog中的别名）
+    implementation(libs.room.runtime)
+    annotationProcessor(libs.room.compiler)  // Java项目用这个
+
+    // 测试支持
+    testImplementation(libs.room.testing)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
 }
